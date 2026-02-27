@@ -78,17 +78,18 @@ All API routes are grouped within `routes/api.php`.
 
 ## 5. Installation Guide
 
-### Step 1: Clone Repository
+### Step 1: Install Laravel
 ```bash
-git clone https://github.com/zeh-raan/pima-app.git
+composer create-project laravel/laravel pima-app --prefer-dist
 ```
 ### Step 2: Navigate to Project Directory
 ```bash
 cd pima-app
 ```
-### Step 3: Install Laravel
+### Step 3: Link Repository
 ```bash
-composer create-project laravel/laravel . --prefer-dist
+git init
+git remote add origin https://github.com/zeh-raan/pima-app.git
 ```
 ### Step 4: Configure Environment
 ```bash
