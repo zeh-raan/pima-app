@@ -80,7 +80,7 @@ All API routes are grouped within `routes/api.php`.
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/zeh-raan/pima-app
+git clone https://github.com/zeh-raan/pima-app.git
 ```
 ### Step 2: Navigate to Project Directory
 ```bash
