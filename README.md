@@ -80,55 +80,68 @@ All API routes are grouped within `routes/api.php`.
 
 ### Step 1: Clone Repository
 ```bash
-git clone <repository-url>
-Step 2: Navigate to Project Directory
+git clone https://github.com/zeh-raan/pima-app
+```
+### Step 2: Navigate to Project Directory
+```bash
 cd task-management-api
-Step 3: Install Dependencies
+```
+### Step 3: Install Dependencies
+```bash
 composer install
-Step 4: Configure Environment
+```
+### Step 4: Configure Environment
+```bash
 cp .env.example .env
-
-Update .env with your database credentials:
-
+```
+> Update .env with your database credentials:
+```env
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
-Step 5: Generate Application Key
+```
+### Step 5: Generate Application Key
+```bash
 php artisan key:generate
-Step 6: Run Database Migrations
+```
+### Step 6: Run Database Migrations
+```bash
 php artisan migrate
-Step 7: Start Development Server
+```
+### Step 7: Start Development Server
+```bash
 php artisan serve
+```
+> API is accessible at: http://127.0.0.1:8000/api
+## 6. API Endpoints
 
-API is accessible at: http://127.0.0.1:8000/api
+All responses are returned in JSON format.
+### 6.1 Projects
+| Method | Endpoint             | Description                 |
+| ------ | -------------------- | --------------------------- |
+| GET    | `/api/projects`      | Retrieve all projects       |
+| GET    | `/api/projects/{id}` | Retrieve a specific project |
+| POST   | `/api/projects`      | Create a new project        |
+| PUT    | `/api/projects/{id}` | Update an existing project  |
+| DELETE | `/api/projects/{id}` | Delete a project            |
 
-6. API Endpoints
-
-All responses are JSON formatted.
-
-6.1 Projects
-Method	Endpoint	Description
-GET	/api/projects	Retrieve all projects
-GET	/api/projects/{id}	Retrieve a specific project
-POST	/api/projects	Create a new project
-PUT	/api/projects/{id}	Update an existing project
-DELETE	/api/projects/{id}	Delete a project
-
-POST /api/projects Example:
-
+POST /api/projects Example Request:
+```json
 {
   "title": "New Project",
   "description": "Project description"
 }
-6.2 Tasks
-Method	Endpoint	Description
-GET	/api/projects/{id}/tasks	Retrieve all tasks in a project
-POST	/api/tasks	Create a new task
-PUT	/api/tasks/{id}	Update an existing task
-DELETE	/api/tasks/{id}	Delete a task
+```
+### 6.2 Tasks
+| Method | Endpoint                   | Description                     |
+| ------ | -------------------------- | ------------------------------- |
+| GET    | `/api/projects/{id}/tasks` | Retrieve all tasks in a project |
+| POST   | `/api/tasks`               | Create a new task               |
+| PUT    | `/api/tasks/{id}`          | Update an existing task         |
+| DELETE | `/api/tasks/{id}`          | Delete a task                   |
 
-POST /api/tasks Example:
-
+POST /api/tasks Example Request:
+```json
 {
   "project_id": 1,
   "title": "Build Controller",
@@ -136,83 +149,36 @@ POST /api/tasks Example:
   "status": "todo",
   "due_date": "2026-03-10"
 }
-Optional Filtering
+```
+## 7. Validation Rules
+### Project
+| Field       | Rules                      |
+| ----------- | -------------------------- |
+| title       | required, string, max: 255 |
+| description | optional, string           |
 
-GET /api/tasks?status=done → Retrieve tasks filtered by status.
+### Tasks
+| Field      | Rules                                  |
+| ---------- | -------------------------------------- |
+| project_id | required, must exist in projects table |
+| title      | required, string                       |
+| status     | required, one of: todo, doing, done    |
+| due_date   | optional, valid date                   |
 
-7. Validation Rules
-Project
+### Error handling
+| HTTP Status | Meaning               |
+| ----------- | --------------------- |
+| 200         | Success               |
+| 201         | Resource created      |
+| 404         | Resource not found    |
+| 422         | Validation error      |
+| 500         | Internal server error |
 
-title → required, string, max: 255
-
-description → optional, string
-
-Task
-
-project_id → required, must exist in projects table
-
-title → required, string
-
-status → required, one of: todo, doing, done
-
-due_date → optional, valid date
-
-Validation failure returns HTTP 422 – Unprocessable Entity.
-
-8. Error Handling
-
-200 → Success
-
-201 → Resource created
-
-404 → Resource not found
-
-422 → Validation error
-
-500 → Internal server error
-
-Example 404 Response:
-
+```json
 {
   "success": false,
   "message": "Resource not found"
 }
-9. API Testing
-
-Test the API using:
-
-Postman
-
-Thunder Client
-
-cURL
-
-POST and PUT requests must include Content-Type: application/json.
-
-10. Future Improvements
-
-Authentication using Laravel Sanctum
-
-Pagination for projects and tasks
-
-Soft deletes
-
-Role-based access control
-
-API versioning
-
-11. Conclusion
-
-This project demonstrates a fully functional RESTful API using Laravel, adhering to:
-
-MVC architecture
-
-Proper REST principles
-
-JSON response formatting
-
-Validation and error handling
-
-Database relationships
-
-It meets the coursework requirements and shows good coding practices.
+```
+### 9. API Testing
+> Postman
