@@ -84,11 +84,11 @@ git clone https://github.com/zeh-raan/pima-app.git
 ```
 ### Step 2: Navigate to Project Directory
 ```bash
-cd task-management-api
+cd pima-app
 ```
-### Step 3: Install Dependencies
+### Step 3: Install Laravel
 ```bash
-composer install
+composer create-project laravel/laravel . --prefer-dist
 ```
 ### Step 4: Configure Environment
 ```bash
