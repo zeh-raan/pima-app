@@ -97,9 +97,9 @@ cp .env.example .env
 ```
 > Update .env with your database credentials:
 ```env
-DB_DATABASE=your_database_name
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_DATABASE=pima_db
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 ### Step 5: Generate Application Key
 ```bash
