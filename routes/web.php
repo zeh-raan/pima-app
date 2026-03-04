@@ -13,5 +13,7 @@ Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{id}/tasks', [TaskController::class, 'index']);
 
 // Task
+Route::get('/tasks', [TaskController::class, 'index']); // For testing
+
 Route::post('/tasks', [TaskController::class, 'store']);
 Route::put('/tasks/{id}', [TaskController::class, 'update']);

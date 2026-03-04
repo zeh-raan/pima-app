@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -11,7 +12,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+        return view('tasks', compact('tasks'));
     }
 
     /**
@@ -19,15 +21,19 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Make a form first
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
+    {   
+
+        // Should normally return one
+        // Reusing logic as index because it's pretty much the same thing
+        $tasks = Task::find($id); 
+        return view('tasks', compact('tasks'));
     }
 
     /**
@@ -41,8 +47,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id) // NOTE: Shouldn't this be an Integer?
     {
-        //
+        $task = Task::find($id);
+        $task::destroy();
     }
 }

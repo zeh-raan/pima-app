@@ -9,13 +9,15 @@ class Project extends Model
 {
     // To be able to use create()
     use HasFactory;
+    
     // Mass assignment and proctection
     protected $fillable = [
         'title',
         'description'
     ];
+
+    // Create relationship with task
     public function tasks() {
-        // Create relationship with task
         return $this->hasMany(Task::class);
     }
 }

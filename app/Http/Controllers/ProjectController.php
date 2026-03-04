@@ -58,8 +58,8 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project) // NOTE: Shouldn't this be an ID?
     {
-        //
+        $project::destroy();
     }
 }

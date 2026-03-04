@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>@yield('title')</title>
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 font-sans min-h-screen">
 <header class="p-4 bg-blue-500 text-white">
