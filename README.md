@@ -105,9 +105,9 @@ DB_PASSWORD=
 ```bash
 php artisan key:generate
 ```
-### Step 6: Run Database Migrations
+### Step 6: Run Database Migrations and Seeders
 ```bash
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 ### Step 7: Start Development Server
 ```bash
