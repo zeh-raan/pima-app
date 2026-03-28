@@ -183,3 +183,7 @@ POST /api/tasks Example Request:
 ```
 ### 9. API Testing
 > Postman
+> CURL
+  ```bash
+  curl -X GET http://127.0.0.1:8000/projects -H "X-API-KEY: your-key-here" -H "Accept: application/json"
+  ```

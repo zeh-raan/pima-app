@@ -48,6 +48,16 @@ class User extends Authenticatable
         ];
     }
 
+    // Links projects to this user
+    public function projects() {
+        return $this->hasMany(Project::class);
+    }
+
+    // Links tasks to this user
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
+
     // Generates an API key
     public function generateAPIKey() {
         $this->api_key = hash('sha256', Str::random(60));

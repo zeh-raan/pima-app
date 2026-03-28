@@ -12,9 +12,15 @@ class Project extends Model
     
     // Mass assignment and proctection
     protected $fillable = [
+        'user_id',
         'title',
         'description'
     ];
+
+    // Links project to a user
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 
     // Create relationship with task
     public function tasks() {

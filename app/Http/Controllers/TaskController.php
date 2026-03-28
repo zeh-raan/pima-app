@@ -12,8 +12,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        return view('tasks', compact('tasks'));
+        // $tasks = Task::all();
+        // return view('tasks', compact('tasks'));
+
+        return auth()->user()->tasks;
     }
 
     /**
@@ -32,8 +34,14 @@ class TaskController extends Controller
 
         // Should normally return one
         // Reusing logic as index because it's pretty much the same thing
-        $tasks = Task::find($id); 
-        return view('tasks', compact('tasks'));
+        // $tasks = Task::find($id); 
+        // return view('tasks', compact('tasks'));
+
+        if ($task->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        return $task;
     }
 
     /**
@@ -49,7 +57,14 @@ class TaskController extends Controller
      */
     public function destroy(string $id) // NOTE: Shouldn't this be an Integer?
     {
-        $task = Task::find($id);
-        $task::destroy();
+        // $task = Task::find($id);
+        // $task::destroy();
+
+        if ($task->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $task->delete();
+        return response()->json(['message' => 'Deleted']);
     }
 }

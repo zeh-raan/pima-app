@@ -13,7 +13,9 @@ class ProjectController extends Controller
     public function index()
     {
         // Return all projects with their tasks
-        return Project::with('tasks')->get();
+        // return Project::with('tasks')->get();
+
+        return auth()->user()->projects()->with('tasks')->get();
     }
 
     /**
@@ -26,8 +28,10 @@ class ProjectController extends Controller
            'title'        => 'required[string] | max:255',
             'descriprion' => 'nullable | string'
         ]);
+
         // Create project
-        return Project::create($data);
+        // return Project::create($data);
+        return auth()->user()->projects()->create($data);
     }
 
     /**
@@ -35,8 +39,14 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        if ($project->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         // Return a single project with tasks
-        return $project -> load('tasks');
+        // return $project -> load('tasks');
+
+        return $project->load('tasks');
     }
 
     /**
@@ -44,6 +54,10 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        if ($project->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         // Validate inputs
         $data = $request->validate([
             'name'        => 'required[string] | max:255',
@@ -60,6 +74,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project) // NOTE: Shouldn't this be an ID?
     {
-        $project::destroy();
+        if ($project->user_id !== auth()->id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $project->delete();
+        return response()->json(['message' => 'Deleted']);
     }
 }

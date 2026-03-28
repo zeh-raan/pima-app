@@ -30,10 +30,14 @@ Route::post(
     '/generate-key', [APIKeyController::class, 'generate']
 )->middleware('auth')->name('generate.key');
 
-// API
-Route::apiResource('projects', ProjectController::class);
-Route::apiResource('tasks', TaskController::class);
+// TODO: Move these routes in /routes/api.php
+// API routes authed with API Key
+Route::middleware('api_key')->group(function () {
+    Route::apiResource('projects', ProjectController::class);
+    Route::apiResource('tasks', TaskController::class);
+});
 
+/*
 // Project
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{id}/tasks', [TaskController::class, 'index']);
@@ -43,3 +47,4 @@ Route::get('/tasks', [TaskController::class, 'index']); // For testing
 
 Route::post('/tasks', [TaskController::class, 'store']);
 Route::put('/tasks/{id}', [TaskController::class, 'update']);
+*/
