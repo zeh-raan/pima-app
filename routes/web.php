@@ -37,6 +37,11 @@ Route::middleware('api_key')->group(function () {
     Route::apiResource('tasks', TaskController::class);
 });
 
+// Documentation on how to use the API
+Route::get('/docs', function() { 
+    return view('docs'); 
+})->middleware('auth'); // Protected behind user auth
+
 /*
 // Project
 Route::get('/projects', [ProjectController::class, 'index']);

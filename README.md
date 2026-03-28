@@ -2,7 +2,7 @@
 
 ## 1. Project Overview
 This project is a RESTful Task Management API developed using **Laravel**.  
-It allows users to create **projects** and manage **tasks** within each project.  
+It allows **users** to create **projects** and manage **tasks**.  
 
 The API demonstrates:
 
@@ -182,8 +182,8 @@ POST /api/tasks Example Request:
 }
 ```
 ### 9. API Testing
-> Postman
-> CURL
+* Postman
+* CURL
   ```bash
   curl -X GET http://127.0.0.1:8000/projects -H "X-API-KEY: your-key-here" -H "Accept: application/json"
   ```
