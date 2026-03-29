@@ -17,19 +17,20 @@
         <br />
 
         <!-- Show existing key -->
-        @if(auth()->user()->api_key)
-            <div class="codebox-wrapper">
-                <code id="api-key-box" class="codebox">{{ auth()->user()->api_key }}</code>
-                <button class="copy-btn" onclick="copyAPIKey();">Copy</button>
-            </div>
+        <div id="api-key-container">
+            @if(auth()->user()->api_key)
+                <div class="codebox-wrapper">
+                    <code id="api-key-box" class="codebox">{{ auth()->user()->api_key }}</code>
+                    <button class="copy-btn" onclick="copyAPIKey();">Copy</button>
+                </div>
 
-        <!-- API Key Generation button -->
-        @else
-            <form method="POST" action="{{ route('generate.key') }}">
-                @csrf
-                <button class="api-key-btn" type="submit">Generate API Key</button>
-            </form>
-        @endif
+            <!-- API Key Generation button -->
+            @else
+                <button class="api-key-btn" onclick="generateKey()">
+                    Generate API Key
+                </button>
+            @endif
+        </div>
     </div>
 
     <div id="making-a-request" class="docs-section">
@@ -152,7 +153,7 @@ curl -X GET http://127.0.0.1:8000/tasks \
         "user_id":1,
         "project_id":1,
         "title":"Make kebab",
-        "status":"todo",
+        "status":"pending",
         "due_date":"2026-03-25",
         "created_at":"2026-03-28T08:07:43.000000Z",
         "updated_at":"2026-03-28T08:07:43.000000Z"
@@ -162,7 +163,7 @@ curl -X GET http://127.0.0.1:8000/tasks \
         "user_id":1,
         "project_id":1,
         "title":"Meter pima?",
-        "status":"todo",
+        "status":"pending",
         "due_date":"2026-03-21",
         "created_at":"2026-03-28T08:07:43.000000Z",
         "updated_at":"2026-03-28T08:07:43.000000Z"
@@ -226,7 +227,7 @@ curl -X GET http://127.0.0.1:8000/tasks/2 \
         <h4>Example:</h4>
         <p>Searching for pending tasks with a deadline within 3 days.</p>
         <pre class="codeblock">
-curl -X GET http://127.0.0.1:8000/tasks?status=todo?due_date=72 \
+curl -X GET http://127.0.0.1:8000/tasks?status=pending?due_date=72 \
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
 
@@ -238,6 +239,35 @@ curl -X GET http://127.0.0.1:8000/tasks?status=todo?due_date=72 \
 </div>
 
 <script defer>
+    async function generateKey() {
+        try {
+            const response = await fetch("{{ route('generate.key') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}", // Escaping JS to feed PHP data
+                    "Accept": "application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            // Update UI with new key
+            const container = document.getElementById("api-key-container");
+            container.innerHTML = `
+                <div class="codebox-wrapper">
+                    <code id="api-key-box" class="codebox">
+                        ${data.api_key}
+                    </code>
+                    <button class="copy-btn" onclick="copyAPIKey()">Copy</button>
+                </div>
+            `;
+
+        } catch (err) {
+            alert("Error when generating API key");
+            console.error(err);
+        }
+    }
+
     function copyAPIKey() {
         const key = document.getElementById("api-key-box").innerText;
         navigator.clipboard.writeText(key)

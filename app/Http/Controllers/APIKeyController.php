@@ -10,7 +10,6 @@ class APIKeyController extends Controller
         $user = $req->user(); // That's if the user has been authenticated
         $key = $user->generateAPIKey();
 
-        // return response()->json([ 'api_key' => $key]);
-        return redirect('/')->with('api_key', $key); // Temporary
+        return response()->json([ 'api_key' => $key]);
     }
 }

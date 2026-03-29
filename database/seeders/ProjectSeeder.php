@@ -34,13 +34,13 @@ class ProjectSeeder extends Seeder
         $project->tasks()->createMany([
             [
                 'title' => 'Make kebab',
-                'status' => 'todo',
+                'status' => 'pending',
                 'due_date' => now()->subDays(3),
                 'user_id' => $user->id,
             ],
             [
                 'title' => 'Meter pima?',
-                'status' => 'todo',
+                'status' => 'pending',
                 'due_date' => now()->subDays(7),
                 'user_id' => $user->id,
             ],
