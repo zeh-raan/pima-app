@@ -137,6 +137,11 @@
         .docs-section h2::before {
             content: "# ";
         }
+
+        .hint {
+            margin-top: 8px;
+            font-style: italic;
+        }
     </style>
 </head>
 

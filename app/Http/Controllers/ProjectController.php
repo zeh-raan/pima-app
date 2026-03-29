@@ -5,80 +5,69 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // Return all projects with their tasks
-        // return Project::with('tasks')->get();
+class ProjectController extends Controller {
 
-        return auth()->user()->projects()->with('tasks')->get();
+    // API Endpoint: GET /projects. Returns all the projects 
+    public function index(Request $req) {
+        $projects = auth()->user()->projects()->with('tasks');
+
+        // Handle GET params
+
+        // ?title parameter passed
+        if ($req->has('title')) {
+            $projects->where('title', '=', $req->title);
+        }
+
+        // ?desc parameter passed
+        if ($req->has('desc')) {
+            $projects->where('description', '=', $req->desc);
+        }
+
+        // Default returns all
+        return $projects->get()->makeHidden('user_id');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
+    // API Endpoint: POST /projects. Creates a new project for authed user
+    // Data received from JSON body
+    public function store(Request $req) {
+        $data = $req->validate([
+            'title'       => 'required | string | max:255',
+            'description' => 'nullable | string'
+        ]);
+
+        // Creates project
+        $p = auth()->user()->projects()->create($data);
+        return response()->json($p->makeHidden('user_id'), 201);
+    }
+
+    // API Endpoint: GET /projects/{id}. Returns the project with that ID
+    public function show($id) {
+        $p = auth()->user()->projects()->with('tasks')->findOrFail($id);
+        return $p->makeHidden('user_id');
+    }
+
+    // API Endpoint: PUT /projects/{id}. Updates the project with that ID
+    // // Data for update received from JSON body
+    public function update(Request $req, $id) {
+        $p = auth()->user()->projects()->with('tasks')->findOrFail($id);
+
         // Validate inputs
-        $data = $request->validate([
-           'title'        => 'required[string] | max:255',
+        $data = $req->validate([
+            'title'       => 'required |string | max:255',
             'descriprion' => 'nullable | string'
         ]);
 
-        // Create project
-        // return Project::create($data);
-        return auth()->user()->projects()->create($data);
+        // Updates project
+        $p -> update($data);
+        return $p->makeHidden('user_id');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
-    {
-        if ($project->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+    // API Endpoint: DELETE /projects/{id}. Deletes the project with that ID
+    public function destroy($id) {
+        $p = auth()->user()->projects()->with('tasks')->findOrFail($id);
+        $p->delete();
 
-        // Return a single project with tasks
-        // return $project -> load('tasks');
-
-        return $project->load('tasks');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Project $project)
-    {
-        if ($project->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        // Validate inputs
-        $data = $request->validate([
-            'name'        => 'required[string] | max:255',
-            'descriprion' => 'nullable | string '
-        ]);
-
-        // Update project
-        $project -> update($data);
-        return $project;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Project $project) // NOTE: Shouldn't this be an ID?
-    {
-        if ($project->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        $project->delete();
-        return response()->json(['message' => 'Deleted']);
+        // TODO: Add error handling??
+        return response()->json(['message' => 'Project deleted successfully']);
     }
 }

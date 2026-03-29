@@ -30,13 +30,6 @@ Route::post(
     '/generate-key', [APIKeyController::class, 'generate']
 )->middleware('auth')->name('generate.key');
 
-// TODO: Move these routes in /routes/api.php
-// API routes authed with API Key
-Route::middleware('api_key')->group(function () {
-    Route::apiResource('projects', ProjectController::class);
-    Route::apiResource('tasks', TaskController::class);
-});
-
 // Documentation on how to use the API
 Route::get('/docs', function() { 
     return view('docs'); 
