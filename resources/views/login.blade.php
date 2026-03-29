@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <title>Log In</title>
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
+
 <body>
-    <h2>Login</h2>
+    <div class="auth-container">
+        <h2>Login</h2>
 
-    <form method="POST" action="/login">
-        @csrf
+        <form method="POST" action="/login">
+            @csrf
 
-        <input type="email" name="email" placeholder="Email" required><br><br>
-        <input type="password" name="password" placeholder="Password" required><br><br>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">Login</button>
+        </form>
 
-    <p>No account? <a href="/signup">Register</a></p>
+        <p>No account? <a href="/signup">Sign up</a></p>
 
-    @if ($errors->any())
-        <div style="color:red;">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
+        @if ($errors->any())
+            <div class="error-box">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+    </div>
 </body>
 </html>

@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
     <title>@yield('title')</title>
-    @yield('head') <!-- For pages to insert their own script/css imports -->
-
     <style>
         * {
             margin: 0px;
@@ -54,6 +52,8 @@
             padding-left: 16px;
         }
     </style>
+
+    @yield('head') <!-- For pages to insert their own script/css imports -->
 </head>
 
 <body>
