@@ -14,7 +14,6 @@ class AuthController extends Controller
     // When a user signs up, validates and inserts in DB
     public function signup(Request $req) {
         $req->validate([
-            'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8'
         ]);

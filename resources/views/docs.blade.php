@@ -9,6 +9,10 @@
 
     <div id="get-started" class="docs-section">
         <h2>Get started</h2>
+        <p>Follow these steps to get started with using our API.</p>
+        <br />
+
+        <h4>Generate an API key.</h4>
         <p>An API key unique to your account is needed to be able to use the API. If you do not already have an API key, click the button below to generate one.</p>
         <br />
 
@@ -97,6 +101,16 @@ curl -X GET http://127.0.0.1:8000/projects/1 \
             </li>
 
             <li>
+                <code><code class="method-get">GET</code> /projects?title=...</code>
+                <p>Returns the project with the respective title.</p>
+            </li>
+
+            <li>
+                <code><code class="method-get">GET</code> /projects?desc=...</code>
+                <p>Returns the project with the respective description.</p>
+            </li>
+
+            <li>
                 <code><code class="method-post">POST</code> /projects</code>
                 <p>Creates a project for the user and returns the new project's ID.</p>
             </li>
@@ -168,8 +182,23 @@ curl -X GET http://127.0.0.1:8000/tasks/2 \
             </li>
 
             <li>
-                <code><code class="method-get">GET</code> /tasks/??????</code>
+                <code><code class="method-get">GET</code> /tasks?project_id=...</code>
                 <p>Returns all the tasks linked to a project ID.</p>
+            </li>
+
+            <li>
+                <code><code class="method-get">GET</code> /tasks?title=...</code>
+                <p>Returns all the tasks with the respective title.</p>
+            </li>
+
+            <li>
+                <code><code class="method-get">GET</code> /tasks?status=...</code>
+                <p>Returns all the tasks with the respective status.</p>
+            </li>
+
+            <li>
+                <code><code class="method-get">GET</code> /tasks?due_date=...</code>
+                <p>Returns all the tasks with the respective deadline (in hours).</p>
             </li>
 
             <li>
@@ -187,6 +216,24 @@ curl -X GET http://127.0.0.1:8000/tasks/2 \
                 <p>Deletes the task with that respective ID.</p>
             </li>
         </ul>
+    </div>
+
+    <div id="advanced-query" class="docs-section">
+        <h2>Advanced querying</h2>
+        <p>More specific data can be queried by chaining <code class="method-get">GET</code> parameters.</p>
+        <br />
+
+        <h4>Example:</h4>
+        <p>Searching for pending tasks with a deadline within 3 days.</p>
+        <pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/tasks?status=todo?due_date=72 \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+
+        <br />
+        <br />
+        <h4>Example results:</h4>
+        <pre class="codeblock">...</pre>
     </div>
 </div>
 

@@ -79,6 +79,7 @@
             padding: 10px 12px;
             background: #00f;
             color: white;
+            font-weight: bold;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -109,6 +110,33 @@
             margin-bottom: 32px;
             padding-left: 8px;
         }
+
+        .method-get,
+        .method-post,
+        .method-put,
+        .method-del {
+            font-weight: bold;
+        }
+
+        .method-get {
+            color: #2ed62e;
+        }
+
+        .method-post {
+            color: #2323b3;
+        }
+
+        .method-put {
+            color: #cece37;
+        }
+
+        .method-del {
+            color: #da2b2b;
+        }
+
+        .docs-section h2::before {
+            content: "# ";
+        }
     </style>
 </head>
 
@@ -120,10 +148,12 @@
             @yield('content')
         </div>
 
-        <!-- Footer can be omitted -->
-        <footer>
-            &copy; 2026 PiMA App
-        </footer>
+        {{--
+            <!-- Footer can be omitted -->
+            <footer>
+                &copy; 2026 PiMA App
+            </footer>
+        --}}
     </main>
 </body>
 </html>
