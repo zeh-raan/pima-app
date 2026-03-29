@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             
             $table->string('title');
-            $table->enum('status', ['pending', 'done'])->default('pending');
+            $table->enum('status', ['pending', 'missed', 'done'])->default('pending');
             $table->date('due_date')->nullable();
             $table->timestamps();
         });

@@ -29,4 +29,6 @@ class Task extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    // TODO: Add a method to renew a missed task
 }

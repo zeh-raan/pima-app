@@ -1,5 +1,10 @@
 @extends('layouts.main')
 @section('title', 'RESTfull API Documentation')
+
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/docs.css') }}">
+@endsection
+
 @section('content')
 <div class="docs-container">
     <div class="docs-section">

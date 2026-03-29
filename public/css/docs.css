@@ -1,0 +1,87 @@
+.codebox-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.codebox, .codeblock {
+    padding: 8px 12px;
+    background: #eee;
+    border-radius: 8px;
+    display: inline-block;
+    font-family: monospace;
+}
+
+.codeblock {
+    width: 95%;
+    padding: 16px 20px;
+    margin-top: 8px;
+}
+
+.copy-btn {
+    padding: 10px 12px;
+    background: #00f;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.api-key-btn {
+    padding: 8px 12px;
+    background-color: #00f;
+    color: #fff;
+
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.docs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.endpoints-list {
+    margin-left: 20px;
+}
+
+.endpoints-list li {
+    margin-bottom: 32px;
+    padding-left: 8px;
+}
+
+.method-get,
+.method-post,
+.method-put,
+.method-del {
+    font-weight: bold;
+}
+
+.method-get {
+    color: #2ed62e;
+}
+
+.method-post {
+    color: #2323b3;
+}
+
+.method-put {
+    color: #cece37;
+}
+
+.method-del {
+    color: #da2b2b;
+}
+
+.docs-section h2::before {
+    content: "# ";
+}
+
+.hint {
+    margin-top: 8px;
+    font-style: italic;
+}
