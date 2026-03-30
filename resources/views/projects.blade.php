@@ -27,7 +27,7 @@
         </div>
 
         @if($p->tasks->isEmpty())
-            <p class="empty">No tasks for this project yet.</p>
+            <p class="inter">No tasks for this project yet.</p>
         
         @else
             <div id="tasks-list">

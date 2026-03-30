@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 
+use Carbon\Carbon;
+
 class TaskController extends Controller
 {
     // API endpoint: GET /tasks - returns all tasks
@@ -32,6 +34,16 @@ class TaskController extends Controller
         }
         if ($req->has('month')) { // Filter by month
             $tasks->whereMonth('due_date', '=', $req->month);
+        }
+
+        // Task is due within specified hours
+        if ($req->has('due')) {
+            $hours = (int) $req->due;
+
+            $now = Carbon::now();
+            $deadline = $now->copy()->addHours($hours);
+
+            $tasks->whereBetween('due_date', [$now, $deadline]);
         }
 
         // Default returns all

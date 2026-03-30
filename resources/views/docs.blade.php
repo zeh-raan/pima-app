@@ -109,7 +109,7 @@ curl -X GET http://127.0.0.1:8000/api/projects/1 \
                 <p>Returns the project with the respective title.</p>
 
                 <pre class="codeblock">
-curl -X GET http://127.0.0.1:8000/api/projects\?title\=Kebab%20Recipe \
+curl -X GET http://127.0.0.1:8000/api/projects?title=Kebab%20Recipe \
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
                 <p class="hint">Note that <code>" "</code> has been replaced with <code>%20</code><p>
@@ -135,7 +135,7 @@ curl -X GET http://127.0.0.1:8000/api/projects\?title\=Kebab%20Recipe \
                 <p>Returns the project with the respective description.</p>
 
                 <pre class="codeblock">
-curl -X GET http://127.0.0.1:8000/api/projects\?desc\=Steps%20in%20making%20a%20kebab\! \ 
+curl -X GET http://127.0.0.1:8000/api/projects?desc=Steps%20in%20making%20a%20kebab\! \ 
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
 
@@ -392,6 +392,45 @@ curl -X GET http://127.0.0.1:8000/api/tasks?status=pending \
             </li>
 
             <li>
+                <code><code class="method-get">GET</code> /api/tasks?year=...</code>
+                <p>Returns all the tasks in a specific year.</p>
+
+                <pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?year=2026 \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+[
+    {
+        "id":1,
+        "user_id":1,
+        "project_id":1,
+        "title":"Make kebab",
+        "status":"pending",
+        "due_date":"2026-03-26",
+        "created_at":"2026-03-29T10:35:07.000000Z",
+        "updated_at":"2026-03-29T10:35:07.000000Z"
+    },
+    {
+        "id":2,
+        "user_id":1,
+        "project_id":1,
+        "title":"Meter pima?",
+        "status":"pending",
+        "due_date":"2026-03-22",
+        "created_at":"2026-03-29T10:35:07.000000Z",
+        "updated_at":"2026-03-29T10:35:07.000000Z"
+    },
+    ...
+]
+</pre>
+            </li>
+
+            <li>
                 <code><code class="method-get">GET</code> /api/tasks?month=...</code>
                 <p>Returns all the tasks in a specific month.</p>
 
@@ -400,6 +439,31 @@ curl -X GET http://127.0.0.1:8000/api/tasks?month=1 \
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
  
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "id":3,
+    "user_id":1,
+    "project_id":1,
+    "title":"Meter tous!",
+    "status":"done",
+    "due_date":"2026-01-30",
+    "created_at":"2026-03-30T11:53:59.000000Z",
+    "updated_at":"2026-03-30T11:53:59.000000Z"
+}</pre>
+            </li>
+
+            <li>
+                <code><code class="method-get">GET</code> /api/tasks?due=...</code>
+                <p>Returns all the tasks that are due within a specified number of hours.</p>
+
+                <pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?due=148 \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+
                 <br />
                 <br />
                 <h4>Example results:</h4>
@@ -496,16 +560,28 @@ curl -X PUT "http://127.0.0.1:8000/api/tasks/3" \
         <br />
 
         <h4>Example:</h4>
-        <p>Searching for pending tasks with a deadline within 3 days.</p>
+        <p>Searching for pending tasks with a deadline within the upcoming week.</p>
         <pre class="codeblock">
-curl -X GET http://127.0.0.1:8000/api/tasks?status=pending?due_date=72 \
+curl -X GET http://127.0.0.1:8000/api/tasks?status=pending&due=148 \
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
 
         <br />
         <br />
         <h4>Example results:</h4>
-        <pre class="codeblock">...</pre>
+        <pre class="codeblock">
+[
+    {
+        "id":3,
+        "user_id":1,
+        "project_id":1,
+        "title":"Wrap Crispy! Ena",
+        "status":"pending",
+        "due_date":"2026-04-05",
+        "created_at":"2026-03-30T15:41:08.000000Z",
+        "updated_at":"2026-03-30T15:41:08.000000Z"
+    }
+]</pre>
     </div>
 </div>
 

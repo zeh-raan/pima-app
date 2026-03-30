@@ -85,6 +85,14 @@
     color: #da2b2b;
 }
 
+.docs-section code:first-of-type {
+    border-bottom: 2px solid #000;
+}
+
+.docs-section p:first-of-type {
+    margin-top: 12px;
+}
+
 .docs-section h2,
 .docs-section h4,
 .docs-section button {
