@@ -1,0 +1,91 @@
+#go-back {
+    text-decoration: none;
+    color: var(--red);
+}
+
+#go-back:hover {
+    text-decoration: 2px underline;
+}
+
+#project-container {
+    width: 100%;
+    padding-right: 20px;
+    margin-top: 24px;
+}
+
+#tasks-section {
+    margin-top: 32px;
+}
+
+#tasks-header {
+    padding: 0px 8px;
+    padding-bottom: 8px;
+    border-bottom: 4px solid var(--red);
+    margin-bottom: 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: last baseline;
+}
+
+#tasks-list {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-card {
+    width: 100%;
+    margin-left: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    background-color: var(--red);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-card h4,
+.task-due {
+    color: #eee;
+}
+
+.task-card * {
+    display: inline;
+    width: 25%;
+}
+
+/* Select inside task card */
+.task-card select {
+    background-color: transparent;
+    color: #eee;
+    border: none;
+    padding: 4px 8px;
+
+    cursor: pointer;
+    outline: none;
+}
+
+.task-card select option {
+    color: #000;
+    background: #eee;
+}
+
+#project-container button {
+    width: 100%;
+    padding: 8px 12px;
+    margin-top: 36px;
+
+    outline: none;
+    border: 4px solid var(--red);
+    border-radius: 8px;
+
+    background-color: var(--red);
+    color: #eee;
+
+    cursor: pointer;
+}

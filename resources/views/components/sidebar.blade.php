@@ -1,11 +1,10 @@
-<div style="width: 250px; height: 100vh; background: #111; color: white; padding: 20px; position: fixed; left: 0; top: 0; display: flex; flex-direction: column; justify-content: space-between;">
+<div id="sidebar-container">
     <div>
-
         <!-- Title -->
-        <h2 style="margin-bottom: 30px;">PIMA App</h2>
+        <h2 class="outfit" style="margin-bottom: 30px;">PIMA App</h2>
 
         <!-- Navigation -->
-        <nav style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px;">
+        <nav>
             <a href="/" class="link">Home</a>
             <a href="/docs#" class="link">Docs</a>
             <a href="/docs#get-started" class="link indent">Get started</a>
@@ -18,8 +17,7 @@
     <div>
         <!-- User Info -->
         <div style="margin-top: 20px;">
-            <p style="font-size: 12px; color: #aaa;">Currently logged in as:</p>
-            <p style="font-weight: bold;">
+            <p class="inter" style="width: 100%; font-weight: bold; text-align: center;">
                 {{ auth()->user()->email }}
             </p>
         </div>
@@ -27,13 +25,13 @@
         <!-- Logout -->
         <form method="POST" action="/logout" style="margin-top: 20px;">
             @csrf
-            <button type="submit"
+            <button type="submit" class="outfit"
                 style="
-                    background: #ff4d4d;
+                    background: #eee;
                     border: none;
                     padding: 10px;
                     width: 100%;
-                    color: white;
+                    color: var(--red);
                     cursor: pointer;
                     border-radius: 5px;
                 ">

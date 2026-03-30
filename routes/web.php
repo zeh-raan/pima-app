@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TaskController;
 
 // User routes
 use App\Http\Controllers\AuthController;
@@ -34,6 +32,10 @@ Route::post(
 Route::get('/docs', function() { 
     return view('docs'); 
 })->middleware('auth'); // Protected behind user auth
+
+// Project and task pages
+use App\Http\Controllers\ProjectController;
+Route::get('/projects/{id}', [ProjectController::class, 'webShow'])->middleware('auth');
 
 /*
 // Project

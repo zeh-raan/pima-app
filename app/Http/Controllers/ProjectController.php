@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller {
 
+    // --------------
+    //   API routes
+    // --------------
+
     // API Endpoint: GET /projects. Returns all the projects 
     public function index(Request $req) {
         $projects = auth()->user()->projects()->with('tasks');
@@ -69,5 +73,14 @@ class ProjectController extends Controller {
 
         // TODO: Add error handling??
         return response()->json(['message' => 'Project deleted successfully']);
+    }
+
+    // --------------
+    //   Web routes
+    // --------------
+
+    public function webShow($id) {
+        $p = auth()->user()->projects()->with('tasks')->findOrFail($id);
+        return view('projects', compact('p'));
     }
 }
