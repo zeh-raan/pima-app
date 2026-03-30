@@ -1,10 +1,15 @@
-<div class="bg-white p-2 rounded flex justify-between items-center shadow">
-    <span class="{{ $task->status === 'done' ? 'line-through text-gray-400' : '' }}">
+<div class="task-card">
+    <h4 class="outfit {{ $task->status === 'done' ? 'done' : '' }}">
         {{ $task->title }}
+    </h4>
+
+    <span class="task-due inter">
+        Due: {{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}
     </span>
-    <select onchange="updateTaskStatus({{ $task->id }}, this.value)" class="border rounded p-1">
-        <option value="todo" {{ $task->status==='todo'?'selected':'' }}>To Do</option>
-        <option value="doing" {{ $task->status==='doing'?'selected':'' }}>Doing</option>
-        <option value="done" {{ $task->status==='done'?'selected':'' }}>Done</option>
+
+    <select onchange="updateTaskStatus({{ $task->id }}, this.value)" class="">
+        <option value="pending" {{ $task->status==='todo'?'selected':'' }}>Pending</option>
+        <option value="done" {{ $task->status==='doing'?'selected':'' }}>Done</option>
+        <option hidden value="missed" {{ $task->status==='done'?'selected':'' }}>Missed</option>
     </select>
 </div>

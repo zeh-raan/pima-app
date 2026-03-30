@@ -8,7 +8,7 @@
 @section('content')
 <div class="docs-container">
     <div class="docs-section">
-        <h1>RESTfull API Documentation</h1>
+        <h1 class="outfit">RESTfull API Documentation</h1>
         <p>This page outlines how to make use of the RESTfull API we provide.</p>
     </div>
 

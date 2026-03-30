@@ -6,7 +6,10 @@
 
 .codebox, .codeblock {
     padding: 8px 12px;
-    background: #eee;
+    
+    background: #232323;
+    color: #eee;
+
     border-radius: 8px;
     display: inline-block;
     font-family: monospace;
@@ -54,6 +57,11 @@
     padding-left: 8px;
 }
 
+/* .endpoints-list li code:nth-of-type(1) {
+    color:#00f;
+    text-decoration: underline;
+} */
+
 .method-get,
 .method-post,
 .method-put,
@@ -77,11 +85,33 @@
     color: #da2b2b;
 }
 
+.docs-section h2,
+.docs-section h4,
+.docs-section button {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.docs-section h2 {
+    color: var(--red);
+    text-decoration: 4px underline;
+    margin-bottom: 4px;
+}
+
 .docs-section h2::before {
     content: "# ";
 }
 
+.docs-section p {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .hint {
     margin-top: 8px;
-    font-style: italic;
+    opacity: 0.6;
 }
