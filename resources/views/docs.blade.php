@@ -157,7 +157,7 @@ curl -X GET http://127.0.0.1:8000/api/projects?desc=Steps%20in%20making%20a%20ke
 
             <li>
                 <code><code class="method-post">POST</code> /api/projects</code>
-                <p>Creates a project for the user and returns the new project's data.</p>
+                <p>Creates a project for the user and returns the new project's ID.</p>
 
                 <pre class="codeblock">
 curl -X POST http://127.0.0.1:8000/api/projects \
@@ -169,14 +169,7 @@ curl -X POST http://127.0.0.1:8000/api/projects \
                 <br />
                 <br />
                 <h4>Example results:</h4>
-                <pre class="codeblock">
-{
-    "title":"CURL Test",
-    "description":"Created through CURL",
-    "updated_at":"2026-03-29T13:30:50.000000Z",
-    "created_at":"2026-03-29T13:30:50.000000Z",
-    "id":2
-}</pre>
+                <pre class="codeblock">2</pre>
             </li>
 
             <li>

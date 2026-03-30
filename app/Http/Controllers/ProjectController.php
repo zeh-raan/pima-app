@@ -41,7 +41,7 @@ class ProjectController extends Controller {
 
         // Creates project
         $p = auth()->user()->projects()->create($data);
-        return response()->json($p->makeHidden('user_id'), 201);
+        return response()->json($p->id, 201);
     }
 
     // API Endpoint: GET /projects/{id}. Returns the project with that ID

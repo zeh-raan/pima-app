@@ -1,0 +1,2 @@
+# Test Use-Case for Laravel RESTful API
+This is a simple python script to demonstrate how the API is used. The script fetches pending tasks due in 3 days, daily, and mails them to a given email address.
