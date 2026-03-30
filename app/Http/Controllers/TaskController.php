@@ -7,64 +7,94 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // API endpoint: GET /tasks - returns all tasks
+    public function index(Request $req)
     {
-        // $tasks = Task::all();
-        // return view('tasks', compact('tasks'));
+        $tasks = auth()->user()->tasks();
 
-        return auth()->user()->tasks;
-    }
+        // Handle GET params
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // TODO: Make a form first
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {   
-
-        // Should normally return one
-        // Reusing logic as index because it's pretty much the same thing
-        // $tasks = Task::find($id); 
-        // return view('tasks', compact('tasks'));
-
-        if ($task->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        // ?project_id parameter passed
+        if ($req->has('project_id')) {
+            $tasks->where('project_id', '=', $req->project_id);
+        } 
+        // ?title parameter passed
+        if ($req->has('title')) {
+            $tasks->where('title', '=', $req->title);
+        }
+        // ?status parameter passed
+        if ($req->has('status')) {
+            $tasks->where('status', '=', $req->status);
+        }
+        // ?due_date parameter passed
+        if ($req->has('year')) { // Filter by year
+            $tasks->whereYear('due_date', '=', $req->year);
+        }
+        if ($req->has('month')) { // Filter by month
+            $tasks->whereMonth('due_date', '=', $req->month);
         }
 
+        // Default returns all
+        return $tasks->get();
+    }
+
+    // API Endpoint: POST /tasks. Creates a new task for authed user given a project id
+    // Data received from JSON body
+    public function store(Request $req) {
+        $data = $req->validate([
+            'project_id' => 'required | exists:projects,id',
+            'title'      => 'required | string | max:255',
+            'status'     => 'required | string | in:pending,done',
+            'due_date'   => 'nullable | date'
+        ]);
+
+        // Creates task
+        $task = auth()->user()->tasks()->create($data);
+        return response()->json($task->id, 201);
+    }
+
+    // API Endpoint: GET /tasks/{id}. Returns the task with that ID
+    public function show($id) {
+        return auth()->user()->tasks()->findOrFail($id);
+    }
+
+    // API Endpoint: PUT /tasks/{id}. Updates the task with that ID
+    // Data for update received from JSON body
+    public function update(Request $req, $id) {
+        $task = auth()->user()->tasks()->findOrFail($id);
+
+        // Validate inputs
+        $data = $req->validate([
+            'title'    => 'required | string | max:255',
+            'status'   => 'required | string | in:pending,done',
+            'due_date' => 'nullable | date'
+        ]);
+
+        // Updates task
+        $task -> update($data);
         return $task;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id) // NOTE: Shouldn't this be an Integer?
-    {
-        // $task = Task::find($id);
-        // $task::destroy();
+    // API Endpoint: DELETE /tasks/{id}. Deletes the task with that ID
+    public function destroy($id) {
+        try {
+            $task = auth()->user()->tasks()->findOrFail($id);
 
-        if ($task->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            // Delete the task
+            $task->delete();
+
+            return response()->json(
+                ['message' => 'Task deleted successfully'], 
+                200
+            );
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Task not found
+            return response()->json(
+                ['error' => 'Task not found'], 
+                404
+            );
         }
-
-        $task->delete();
-        return response()->json(['message' => 'Deleted']);
     }
 }

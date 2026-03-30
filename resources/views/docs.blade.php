@@ -273,41 +273,219 @@ curl -X GET http://127.0.0.1:8000/api/tasks \
 curl -X GET http://127.0.0.1:8000/api/tasks/2 \
 -H "X-API-KEY: your-key-here" \
 -H "Accept: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "id":2,
+    "user_id":1,
+    "project_id":1,
+    "title":"Meter pima?",
+    "status":"pending",
+    "due_date":"2026-03-23",
+    "created_at":"2026-03-30T09:52:42.000000Z",
+    "updated_at":"2026-03-30T09:52:42.000000Z"
+}</pre>
             </li>
 
             <li>
                 <code><code class="method-get">GET</code> /api/tasks?project_id=...</code>
                 <p>Returns all the tasks linked to a project ID.</p>
+
+<pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?project_id=1 \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+[
+    {
+        "id":1,
+        "user_id":1,
+        "project_id":1,
+        "title":"Make kebab",
+        "status":"pending",
+        "due_date":"2026-03-27",
+        "created_at":"2026-03-30T09:52:42.000000Z",
+        "updated_at":"2026-03-30T09:52:42.000000Z"
+    },
+    {
+        "id":2,
+        "user_id":1,
+        "project_id":1,
+        "title":"Meter pima?",
+        "status":"pending",
+        "due_date":"2026-03-23",
+        "created_at":"2026-03-30T09:52:42.000000Z",
+        "updated_at":"2026-03-30T09:52:42.000000Z"
+    }
+    ...
+]</pre>
             </li>
 
             <li>
                 <code><code class="method-get">GET</code> /api/tasks?title=...</code>
                 <p>Returns all the tasks with the respective title.</p>
+
+<pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?title=Make%20kebab \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "id":1,
+    "user_id":1,
+    "project_id":1,
+    "title":"Make kebab",
+    "status":"pending",
+    "due_date":"2026-03-27",
+    "created_at":"2026-03-30T09:52:42.000000Z",
+    "updated_at":"2026-03-30T09:52:42.000000Z"
+}</pre>
             </li>
 
             <li>
                 <code><code class="method-get">GET</code> /api/tasks?status=...</code>
                 <p>Returns all the tasks with the respective status.</p>
+
+<pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?status=pending \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+[
+    {
+        "id":1,
+        "user_id":1,
+        "project_id":1,
+        "title":"Make kebab",
+        "status":"pending",
+        "due_date":"2026-03-27",
+        "created_at":"2026-03-30T09:52:42.000000Z",
+        "updated_at":"2026-03-30T09:52:42.000000Z"
+    },
+    {
+        "id":2,
+        "user_id":1,
+        "project_id":1,
+        "title":"Meter pima?",
+        "status":"pending",
+        "due_date":"2026-03-23",
+        "created_at":"2026-03-30T09:52:42.000000Z",
+        "updated_at":"2026-03-30T09:52:42.000000Z"
+    }
+    ...
+]</pre>
             </li>
 
             <li>
-                <code><code class="method-get">GET</code> /api/tasks?due_date=...</code>
-                <p>Returns all the tasks with the respective deadline (in hours).</p>
+                <code><code class="method-get">GET</code> /api/tasks?month=...</code>
+                <p>Returns all the tasks in a specific month.</p>
+
+<pre class="codeblock">
+curl -X GET http://127.0.0.1:8000/api/tasks?month=1 \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "id":3,
+    "user_id":1,
+    "project_id":1,
+    "title":"Meter tous!",
+    "status":"done",
+    "due_date":"2026-01-30",
+    "created_at":"2026-03-30T11:53:59.000000Z",
+    "updated_at":"2026-03-30T11:53:59.000000Z"
+}</pre>
             </li>
 
             <li>
                 <code><code class="method-post">POST</code> /api/tasks</code>
                 <p>Creates a new task (given that <code class="api-reqs">project_id</code> is provided) and returns its ID.</p>
+
+<pre class="codeblock">
+curl -X POST "http://127.0.0.1:8000/api/tasks" \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+    "project_id": 1,
+    "title": "Wrap Crispy! Ena",
+    "status": "done",
+    "due_date": "2026-04-05 14:00:00"
+}'</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">4</pre>
             </li>
 
             <li>
                 <code><code class="method-put">PUT</code> /api/tasks/{id}</code>
                 <p>Updates the task with that respective ID.</p>
+
+<pre class="codeblock">
+curl -X PUT "http://127.0.0.1:8000/api/tasks" \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+    "title":"Meter pima? (Updated)",
+    "status": "done",
+    "due_date": "2026-04-05 15:00:00"
+}'</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "id":2,
+    "user_id":1,
+    "project_id":1,
+    "title":"Meter pima? (Updated)",
+    "status":"done",
+    "due_date":"2026-04-05 15:00:00",
+    "created_at":"2026-03-30T11:53:59.000000Z",
+    "updated_at":"2026-03-30T13:49:18.000000Z"
+}</pre>
             </li>
 
             <li>
                 <code><code class="method-del">DELETE</code> /api/tasks/{id}</code>
                 <p>Deletes the task with that respective ID.</p>
+
+<pre class="codeblock">
+curl -X PUT "http://127.0.0.1:8000/api/tasks/3" \
+-H "X-API-KEY: your-key-here" \
+-H "Accept: application/json" \
+-H "Content-Type: application/json"</pre>
+ 
+                <br />
+                <br />
+                <h4>Example results:</h4>
+                <pre class="codeblock">
+{
+    "message":"Task deleted successfully"
+}</pre>
             </li>
         </ul>
     </div>
