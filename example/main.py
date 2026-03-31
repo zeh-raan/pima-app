@@ -67,8 +67,8 @@ def sendEmail(tasks):
 
     msg = EmailMessage()
     msg["Subject"] = "Pending Tasks Reminder"
-    msg["From"]   = EMAIL
-    msg["To"]     = EMAIL
+    msg["From"]    = EMAIL
+    msg["To"]      = EMAIL
     msg.set_content(body)
 
     try:

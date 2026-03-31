@@ -23,8 +23,18 @@ Follow these steps to setup everything the script needs. More specifically, your
         EMAIL=your-email-here
         APP_PASSWORD=your-apppassword-here
         ```
+2. **Setup virtual environment**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
+    ```    
 
-2. **Run the script**
+3. **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```    
+
+4. **Run the script**
     ```bash
     python main.py
     ```
