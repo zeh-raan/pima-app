@@ -21,7 +21,7 @@ Follow these steps to setup everything the script needs. More specifically, your
         ```python
         API_KEY=your-key-here
         EMAIL=your-email-here
-        APP_PASSWORD=your-app=password-here
+        APP_PASSWORD=your-apppassword-here
         ```
 
 2. **Run the script**
