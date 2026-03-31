@@ -147,7 +147,7 @@ POST /api/tasks Example Request:
   "project_id": 1,
   "title": "Build Controller",
   "description": "Develop project controller logic",
-  "status": "todo",
+  "status": "pending",
   "due_date": "2026-03-10"
 }
 ```
@@ -159,12 +159,12 @@ POST /api/tasks Example Request:
 | description | optional, string           |
 
 ### Tasks
-| Field      | Rules                                  |
-| ---------- | -------------------------------------- |
-| project_id | required, must exist in projects table |
-| title      | required, string                       |
-| status     | required, one of: todo, doing, done    |
-| due_date   | optional, valid date                   |
+| Field      | Rules                                                       |
+| ---------- | ----------------------------------------------------------- |
+| project_id | required, must exist in projects table                      |
+| title      | required, string                                            |
+| status     | required, one of: pending, done, missed                     |
+| due_date   | optional, valid date, schedule command handles missed tasks |
 
 ### Error handling
 | HTTP Status | Meaning               |

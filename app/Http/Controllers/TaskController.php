@@ -56,7 +56,7 @@ class TaskController extends Controller
         $data = $req->validate([
             'project_id' => 'required | exists:projects,id',
             'title'      => 'required | string | max:255',
-            'status'     => 'required | string | in:pending,done',
+            'status'     => 'required | string | in:pending,done,missed',
             'due_date'   => 'nullable | date'
         ]);
 
@@ -98,10 +98,10 @@ class TaskController extends Controller
 
             return response()->json(
                 ['message' => 'Task deleted successfully'], 
-                200
+                201
             );
 
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException) {
             // Task not found
             return response()->json(
                 ['error' => 'Task not found'], 

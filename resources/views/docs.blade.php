@@ -531,10 +531,9 @@ curl -X PUT "http://127.0.0.1:8000/api/tasks" \
                 <p>Deletes the task with that respective ID.</p>
 
 <pre class="codeblock">
-curl -X PUT "http://127.0.0.1:8000/api/tasks/3" \
--H "X-API-KEY: your-key-here" \
--H "Accept: application/json" \
--H "Content-Type: application/json"</pre>
+curl -X DELETE http://127.0.0.1:8000/api/tasks/2 \
+-H "X-API-KEY: your-key-here" \ 
+-H "Accept: application/json"</pre>
  
                 <br />
                 <br />
