@@ -1,123 +1,89 @@
-# Pima - Task Management RESTful API
+# 📋 Task Management RESTful API
+This project is a RESTful Task Management API developed using **Laravel**. It allows **users** to create **projects** and manage **tasks**. The API demonstrates:
+- REST principles with JSON responses.
+- Laravel MVC architecture.
+- Database integration using MySQL.
+- Input validation and error handling.
+- Route grouping and API Resource formatting.
+  - All API routes are grouped within `routes/api.php`.
 
-## 1. Project Overview
-This project is a RESTful Task Management API developed using **Laravel**.  
-It allows **users** to create **projects** and manage **tasks**.  
-
-The API demonstrates:
-
-- REST principles with JSON responses  
-- Laravel MVC architecture  
-- Database integration using MySQL  
-- Input validation and error handling  
-- Route grouping and API Resource formatting  
-
----
-
-## 2. Technologies Used
-
-- PHP 8+  
-- Laravel Framework  
-- MySQL  
-- REST Architecture  
-- JSON  
-- Composer  
-
----
-
-## 3. System Architecture
-
-The application follows **Laravel MVC** structure:
-
-- **Models** → Database interaction  
-- **Controllers** → Handle request logic  
-- **API Resources** → Format JSON responses  
-- **Routes (api.php)** → Define RESTful endpoints  
-- **Database (MySQL)** → Stores system data  
-
-All API routes are grouped within `routes/api.php`.
-
----
-
-## 4. Database Structure
+## 🗂️ Database Structure
+This is a brief overview of our database for the sake of comprehension.
 
 ### Users Table
-- `id`  
-- `name`  
-- `email`  
-- `password`  
-- `timestamps`  
+Below is an example of the **Users** table in our application.
+* We modified the default model that Laravel provides (as well as user sessions).
+* The `password` and `api_key` fields are hashed for security reasons.  
+&nbsp;
 
-**Relationship:** A User has many Projects.
+| id | email | password | api_key |
+|----|-------|----------|---------|
+| 1 | test@example.com | hizxd... | asjipd... |
 
 ### Projects Table
-- `id`  
-- `user_id` (foreign key → users.id)  
-- `title`  
-- `description`  
-- `timestamps`  
+Below is an example of the **Projects** table in our application.
+* *Many* projects belong to *only one* user.  
+&nbsp;
 
-**Relationships:**  
-- A Project belongs to a User  
-- A Project has many Tasks
+| id | user_id | title | description |
+|----|-------|----------|---------|
+| 1 | 1 | "Title" | "Fancy description" |
 
 ### Tasks Table
-- `id`  
-- `project_id` (foreign key → projects.id)  
-- `title`  
-- `description`  
-- `status` (enum: todo, doing, done)  
-- `due_date` (nullable)  
-- `timestamps`  
+Below is an example of the **Tasks** table in our application.
+* *Many* tasks belong to *only one* project.
+* *Many* tasks belong to *only one* user, because of the relationship between **** and **Projects**.
+* Tasks have **3 status** values; "pending", "done" and "missed".  
+&nbsp;
 
-**Relationship:** A Task belongs to a Project.  
+| id | project_id | title | status | due_date |
+|----|------------|-------|--------|----------|
+| 1 | 1 | "Task 1" | "pending" | ... |
+| 2 | 1 | "Task 2" | "done" | ... |
+| 3 | 2 | "Task 3" | "missed" | ... |
 
-> Foreign key constraints use cascade delete to maintain data integrity.
+## 💻 Setup & Usage
+Follow these steps to be able to properly run the application.
 
----
+1. **Clone the repository.**
+    ```bash
+    git clone https://github.com/zeh-raan/pima-app.git
+    ```
 
-## 5. Installation Guide
+2. **Navigate to project directory.**
+    ```bash
+    cd pima-app/
+    ```
 
-### Step 1: Install Laravel
-```bash
-composer create-project laravel/laravel pima-app --prefer-dist
-```
-### Step 2: Navigate to Project Directory
-```bash
-cd pima-app
-```
-### Step 3: Link Repository
-```bash
-git init
-git remote add origin https://github.com/zeh-raan/pima-app.git
-```
-### Step 4: Configure Environment
-```bash
-cp .env.example .env
-```
-> Update .env with your database credentials:
-```env
-DB_DATABASE=pima_db
-DB_USERNAME=root
-DB_PASSWORD=
-```
-### Step 5: Generate Application Key
-```bash
-php artisan key:generate
-```
-### Step 6: Run Database Migrations and Seeders
-```bash
-php artisan migrate:fresh --seed
-```
-### Step 7: Start Development Server
-```bash
-php artisan serve
-```
-> API is accessible at: http://127.0.0.1:8000/api
-## 6. API Endpoints
+3. **Setup environment variables.**
+    ```bash
+    cp .env.example .env
+    ```
 
-All responses are returned in JSON format.
-### 6.1 Projects
+    * Update database properties.
+      ```python
+      DB_DATABASE=pima_db
+      DB_USERNAME=root
+      DB_PASSWORD=
+      ```
+
+4. **Run database migrations and seeders.**
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+5. **Start the application.**
+    ```bash
+    php artisan serve
+    ```
+## 🌐 API Endpoints
+All api endpoints are found at http://localhost:8000/api. 
+
+**Some** of the endpoints have been listed below. To see the full list:
+1. Start the application.
+2. Go to http://localhost:8000/docs.
+
+### Project API Endpoints
 | Method | Endpoint             | Description                 |
 | ------ | -------------------- | --------------------------- |
 | GET    | `/api/projects`      | Retrieve all projects       |
@@ -126,64 +92,22 @@ All responses are returned in JSON format.
 | PUT    | `/api/projects/{id}` | Update an existing project  |
 | DELETE | `/api/projects/{id}` | Delete a project            |
 
-POST /api/projects Example Request:
-```json
-{
-  "title": "New Project",
-  "description": "Project description"
-}
-```
-### 6.2 Tasks
+### Tasks API Endpoints
 | Method | Endpoint                   | Description                     |
 | ------ | -------------------------- | ------------------------------- |
-| GET    | `/api/projects/{id}/tasks` | Retrieve all tasks in a project |
+| GET    | `/api/tasks?project_id={project_id}` | Retrieve all tasks in a project |
 | POST   | `/api/tasks`               | Create a new task               |
 | PUT    | `/api/tasks/{id}`          | Update an existing task         |
 | DELETE | `/api/tasks/{id}`          | Delete a task                   |
 
-POST /api/tasks Example Request:
-```json
-{
-  "project_id": 1,
-  "title": "Build Controller",
-  "description": "Develop project controller logic",
-  "status": "pending",
-  "due_date": "2026-03-10"
-}
-```
-## 7. Validation Rules
-### Project
-| Field       | Rules                      |
-| ----------- | -------------------------- |
-| title       | required, string, max: 255 |
-| description | optional, string           |
-
-### Tasks
-| Field      | Rules                                                       |
-| ---------- | ----------------------------------------------------------- |
-| project_id | required, must exist in projects table                      |
-| title      | required, string                                            |
-| status     | required, one of: pending, done, missed                     |
-| due_date   | optional, valid date, schedule command handles missed tasks |
-
-### Error handling
-| HTTP Status | Meaning               |
-| ----------- | --------------------- |
-| 200         | Success               |
-| 201         | Resource created      |
-| 404         | Resource not found    |
-| 422         | Validation error      |
-| 500         | Internal server error |
-
-```json
-{
-  "success": false,
-  "message": "Resource not found"
-}
-```
-### 9. API Testing
+## 🛠️ API Testing
+The API can be tested using various tools such as:
 * Postman
 * CURL
   ```bash
   curl -X GET http://127.0.0.1:8000/projects -H "X-API-KEY: your-key-here" -H "Accept: application/json"
   ```
+
+### Example Use Case
+We have provided a simple python script under `/example` to demonstrate how the API may be used.  
+Follow the `README.md` there!
