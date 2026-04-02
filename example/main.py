@@ -19,7 +19,7 @@ API_URL = "http://127.0.0.1:8000/api/tasks"
 def fetchTask():
     try :
         # Due in 3 days
-        due_3_days_str = (datetime.now() + timedelta(seconds=30)).strftime("%Y-%m-%d %H:%M:%S") # Change to hours=72
+        due_3_days_str = (datetime.now() + timedelta(hours=72)).strftime("%Y-%m-%d %H:%M:%S")
 
         params = {
             "status"  : "pending",
@@ -85,12 +85,12 @@ def sendEmail(tasks):
 
 # Main loop
 def main():
-    # TODO: Better way to handle the loop 
     while True:
         tasks = fetchTask() # Fetch task
         sendEmail(tasks) # Sends email
-        print("Next check in 30 seconds")
-        time.sleep(30)
+        # Output test
+        print("Next check in 3 days")
+        time.sleep(3*24*60*60) # Next 3 days
 
 
 # A python script that runs a loop (1 day for 1 iteraion) which fetches pending

@@ -1,7 +1,7 @@
 <div id="sidebar-container">
     <div>
         <!-- Title -->
-        <h2 class="outfit" style="margin-bottom: 30px;">PIMA App</h2>
+        <h2 class="outfit" style="color:black; margin-bottom: 30px;">EZ-Tasking</h2>
 
         <!-- Navigation -->
         <nav>

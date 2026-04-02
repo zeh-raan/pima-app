@@ -3,6 +3,8 @@
 
 @section('head')
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+<script src="{{ asset('js/crud.js') }}" defer></script>
+<meta name="api-key" content="{{ auth()->user()->api_key }}">
 @endsection
 
 @section('content')
@@ -38,9 +40,9 @@
             </div>
         @endif
         
-        <button 
-            class="outfit"
-            onclick="window.location.href='/projects/new';">New Project</button>
+        <!-- Projects FORM GOES HERE ******************************-->
+
+        <button onclick="CRUD.showForm('new-project-form')">+ New Project</button>
     </div>
 
 </div>

@@ -4,13 +4,14 @@
 }
 
 #go-back:hover {
-    text-decoration: 2px underline;
+    text-decoration: underline;
 }
 
 #project-container {
     width: 100%;
-    padding-right: 20px;
-    margin-top: 24px;
+    max-width: 900px; /* optional: constrain container width */
+    margin: 24px auto 0 auto;
+    padding: 0 16px;
 }
 
 #tasks-section {
@@ -18,74 +19,88 @@
 }
 
 #tasks-header {
-    padding: 0px 8px;
-    padding-bottom: 8px;
+    padding: 0 8px 8px 8px;
     border-bottom: 4px solid var(--red);
     margin-bottom: 16px;
 
     display: flex;
     justify-content: space-between;
-    align-items: last baseline;
+    align-items: baseline; /* fixed from last baseline */
 }
 
 #tasks-list {
-    width: 100%;
-    
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+/* Task card styling */
 .task-card {
-    width: 100%;
-    margin-left: 8px;
-    padding: 8px 12px;
-    border-radius: 8px;
-
-    background-color: var(--red);
-
     display: flex;
+    flex-wrap: wrap; /* allow small screens */
     justify-content: space-between;
     align-items: center;
-}
-
-.task-card h4,
-.task-due {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: var(--red);
     color: #eee;
 }
 
-.task-card * {
-    display: inline;
-    width: 25%;
+/* Task title */
+.task-card h4 {
+    flex: 1 1 40%; /* grows to 40% of card width */
+    margin: 0;
 }
 
-/* Select inside task card */
+/* Due date */
+.task-card .task-due {
+    flex: 1 1 25%;
+    text-align: left;
+}
+
+/* Status select */
 .task-card select {
+    flex: 1 1 20%;
     background-color: transparent;
     color: #eee;
-    border: none;
+    border: 1px solid #eee;
     padding: 4px 8px;
-
+    border-radius: 4px;
     cursor: pointer;
     outline: none;
 }
 
+/* Select options */
 .task-card select option {
     color: #000;
     background: #eee;
 }
 
+/* Action buttons inside task card */
+.task-card .task-actions {
+    flex: 1 1 15%;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.task-card .task-actions button {
+    padding: 4px 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: transparent;
+    color: #eee;
+    cursor: pointer;
+}
+
+/* New Task button */
 #project-container button {
     width: 100%;
-    padding: 8px 12px;
+    padding: 12px;
     margin-top: 36px;
-
-    outline: none;
     border: 4px solid var(--red);
     border-radius: 8px;
-
     background-color: var(--red);
     color: #eee;
-
     cursor: pointer;
 }

@@ -62,7 +62,7 @@ Follow these steps to be able to properly run the application.
 
     * Update database properties.
       ```python
-      DB_DATABASE=pima_db
+      DB_DATABASE=ez_tasking
       DB_USERNAME=root
       DB_PASSWORD=
       ```

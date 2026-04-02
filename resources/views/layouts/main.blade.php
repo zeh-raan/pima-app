@@ -27,7 +27,7 @@
         }
 
         :root {
-            --red: #e63946;
+            --red: #FF5B5B;
         }
 
         * {
@@ -43,6 +43,7 @@
         body {
             width: 100vw;
             height: 100vh;
+            background:
         }
 
         main {
@@ -122,13 +123,6 @@
         <div class="content">
             @yield('content')
         </div>
-
-        {{--
-            <!-- Footer can be omitted -->
-            <footer>
-                &copy; 2026 PiMA App
-            </footer>
-        --}}
     </main>
 </body>
 </html>

@@ -62,7 +62,7 @@ class TaskController extends Controller
 
         // Creates task
         $task = auth()->user()->tasks()->create($data);
-        return response()->json($task->id, 201);
+        return response()->json($task, 201);
     }
 
     // API Endpoint: GET /tasks/{id}. Returns the task with that ID
