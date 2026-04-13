@@ -4,20 +4,24 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Task;
+use Carbon\Carbon;
 
 class UpdateMissedTasks extends Command
 {
-    protected $signature   = 'app:update-missed-tasks';
-    protected $description = 'Command description';
+    protected $signature = 'tasks:update-missed';
+    protected $description = 'Mark overdue pending tasks as missed';
 
-    // Handles pending status in the past
-    public function handle() {
+    public function handle()
+    {
+        $now = Carbon::now();
+
         $updated = Task::where('status', 'pending')
             ->whereNotNull('due_date')
-            ->where('due_date', '<', now())
-            ->update(['status' => 'missed']);
+            ->where('due_date', '<', $now)
+            ->update([
+                'status' => 'missed'
+            ]);
 
-        // Test output
-        $this->info("You missed {$updated} task(s)!");
+        $this->info("{$updated} task(s) marked as missed");
     }
 }

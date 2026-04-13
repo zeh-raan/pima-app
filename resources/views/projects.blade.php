@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <!-- New / Edit Task Form -->
+    <!-- Task Form -->
     <div id="new-task-form" style="margin-top: 12px; display:none;" data-project-id="{{ $p->id }}">
         <input type="text" id="task-title" placeholder="Task title" />
         <input type="date" id="task-due" />

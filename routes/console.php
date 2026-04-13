@@ -8,6 +8,10 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Test: php artisan app:update-missed-tasks
-// Constant Monitoring : php artisan schedule:work
-Schedule::command('app:update-missed-tasks')->everyMinute();
+// Test manually:
+// php artisan tasks:update-missed
+
+// Run scheduler:
+// php artisan schedule:work
+
+Schedule::command('tasks:update-missed')->everyMinute();

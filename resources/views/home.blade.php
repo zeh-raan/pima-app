@@ -21,26 +21,43 @@
 
         @if(auth()->user()->projects->isEmpty())
             <p id="no-projects">No projects yet.</p>
-        @else
-            <div class="projects-grid">
-
-                @foreach(auth()->user()->projects as $p)
-                    <a class="project-card" href="/projects/{{ $p->id }}">
-
-                        <h3 class="outfit">{{ $p->title }}</h3>
-                        <p class="desc inter">
-                            {{ $p->description ?? 'No description' }}
-                        </p>
-                        <br />
-
-                        <p class="inter" style="width: 100%; text-align: center; font-size: 32px;">→</p>
-                    </a>
-                @endforeach
-
-            </div>
         @endif
-        
-        <!-- Projects FORM GOES HERE ******************************-->
+
+        <div class="projects-grid" id="projects-list">
+            @foreach(auth()->user()->projects as $p)
+                <a class="project-card" id="project-{{ $p->id }}" href="/projects/{{ $p->id }}">
+
+                    <h3 class="outfit">{{ $p->title }}</h3>
+                    <p class="desc inter">
+                        {{ $p->description ?? 'No description' }}
+                    </p>
+
+                    <br />
+                    <p class="inter" style="text-align:center;font-size:32px;">→</p>
+
+                    <div class="task-actions">
+                        <button onclick="event.preventDefault(); CRUD.edit({{ $p->id }}, '{{ $p->title }}', '{{ $p->description }}', '', 'project')">
+                            Edit
+                        </button>
+
+                        <button onclick="event.preventDefault(); CRUD.delete({{ $p->id }}, 'project')">
+                            Delete
+                        </button>
+                    </div>
+
+                </a>
+            @endforeach
+        </div>
+
+        <!-- PROJECT FORM -->
+        <div id="new-project-form" style="margin-top: 12px; display:none;">
+            <input type="text" id="project-title" placeholder="Project title" />
+            <input type="text" id="project-description" placeholder="Project description" />
+
+            <button onclick="CRUD.saveForm('new-project-form', 'project')">
+                Add Project
+            </button>
+        </div>
 
         <button onclick="CRUD.showForm('new-project-form')">+ New Project</button>
     </div>

@@ -1,100 +1,78 @@
 import requests as r
 import smtplib
-import time
 import os
 
-from datetime      import datetime, timedelta
 from email.message import EmailMessage
-from dotenv        import load_dotenv
+from dotenv import load_dotenv
 
-# Load the .env
 load_dotenv()
-API_KEY      = os.getenv("API_KEY")
-EMAIL        = os.getenv("EMAIL")
+
+API_KEY = os.getenv("API_KEY")
+EMAIL = os.getenv("EMAIL")
 APP_PASSWORD = os.getenv("APP_PASSWORD")
+
 API_URL = "http://127.0.0.1:8000/api/tasks"
 
 
-# Handles fetching pending task(s)
+# FETCH TASKS
 def fetchTask():
-    try :
-        # Due in 3 days
-        due_3_days_str = (datetime.now() + timedelta(hours=72)).strftime("%Y-%m-%d %H:%M:%S")
-
-        params = {
-            "status"  : "pending",
-            "due_date": due_3_days_str 
-        }
-
+    try:
         headers = {
             "X-API-KEY": API_KEY,
             "Accept": "application/json"
         }
 
+        params = {
+            "status": "missed"
+        }
+
         response = r.get(API_URL, headers=headers, params=params)
-        
-        # Good response
+
         if response.status_code == 200:
             return response.json()
 
-        # Bad response
-        else:
-            # Output test
-            print(f"Error fetching tasks:\n{response.status_code}\n{response.text}")
-            return []
-
-    # Handles json not found error
-    except ValueError as json_err:
-        # Output test
-        print(f"JSON decode error: {json_err}")
+        print("Error:", response.status_code, response.text)
         return []
 
     except Exception as e:
-        # Output test
-        print(f"Unexpected error: {e}")
+        print("Fetch error:", e)
         return []
 
-# Handles sending emails
+
+# SEND EMAIL
 def sendEmail(tasks):
     if not tasks:
-        print("No tasks to send.")
+        print("No tasks found.")
         return
 
-    # Build email content
-    body = "Pending Tasks Due in 3 Days:\n\n"
+    body = "Missed Tasks:\n\n"
+
     for t in tasks:
         body += f"- {t['title']} (Due: {t['due_date']})\n"
 
     msg = EmailMessage()
-    msg["Subject"] = "Pending Tasks Reminder"
-    msg["From"]    = EMAIL
-    msg["To"]      = EMAIL
+    msg["Subject"] = "Missed Task Reminder"
+    msg["From"] = EMAIL
+    msg["To"] = EMAIL
     msg.set_content(body)
 
     try:
-        # Connect to Gmail SMTP
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(EMAIL, APP_PASSWORD)
             smtp.send_message(msg)
-            # Output test
-            print(f"Email sent! {len(tasks)} task(s) included.")
+
+        print(f"Email sent with {len(tasks)} missed tasks")
 
     except Exception as e:
-        # Output test
-        print("Error sending email:", e)
+        print("Email error:", e)
 
-# Main loop
+
+# RUN ONCE
 def main():
-    while True:
-        tasks = fetchTask() # Fetch task
-        sendEmail(tasks) # Sends email
-        # Output test
-        print("Next check in 3 days")
-        time.sleep(3*24*60*60) # Next 3 days
+    tasks = fetchTask()
+    sendEmail(tasks)
+    print("Done")
 
 
-# A python script that runs a loop (1 day for 1 iteraion) which fetches pending
-# tasks which are due in 3 days (72 hours) and emails them to the given
-# email address in the .env file
 if __name__ == "__main__":
     main()
